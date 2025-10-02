@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pose Lu</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #111;
+    }
+    .container {
+      position: relative;
+      max-width: 90%;
+      max-height: 90vh;
+    }
+    .container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+    .overlay {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .overlay {
+        font-size: 1rem;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="http://img.soy-chile.cl/Fotos/2014/08/06/file_20140806142936.jpg" alt="Pose Lu">
+    <div class="overlay">pose lu yang lagi baca ini</div>
+  </div>
+</body>
+</html>
