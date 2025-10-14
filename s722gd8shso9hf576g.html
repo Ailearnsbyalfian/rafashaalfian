@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Webshell</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #0a0a0a 0%, #050505 100%);
+      font-family: 'JetBrains Mono', monospace;
+      color: #00ff88;
+      overflow: hidden;
+    }
+    .container {
+      width: 90%;
+      max-width: 420px;
+      padding: 40px 30px;
+      background: rgba(10, 10, 10, 0.85);
+      border: 1px solid #0f0;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0, 255, 100, 0.1);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      font-size: 1.8em;
+      letter-spacing: 1px;
+      color: #9effc5;
+      margin-bottom: 25px;
+    }
+    .download-btn {
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1em;
+      background: transparent;
+      border: 1.5px solid #00ff88;
+      color: #00ff88;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    .download-btn:hover {
+      background: #00ff88;
+      color: #0b0b0b;
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+      transform: translateY(-1px);
+    }
+    .progress {
+      margin-top: 18px;
+      font-size: 0.9em;
+      color: #77ffb0;
+      display: none;
+      opacity: 0.9;
+    }
+    .progress.active {
+      display: block;
+    }
+    canvas.matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.25;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      .download-btn {
+        font-size: 0.95em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix" class="matrix"></canvas>
+  <div class="container">
+    <h1>Download Webshell</h1>
+    <button class="download-btn" onclick="startDownload()">Start Download</button>
+    <div class="progress" id="progress">Initializing...</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const chars = '01';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }, () => 1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00ff88';
+      ctx.font = fontSize + 'px monospace';
+      drops.forEach((y, i) => {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, y * fontSize);
+        drops[i] = y * fontSize > canvas.height && Math.random() > 0.975 ? 0 : y + 1;
+      });
+    }
+    setInterval(draw, 40);
+
+    function startDownload() {
+      const btn = document.querySelector('.download-btn');
+      const progress = document.getElementById('progress');
+      btn.disabled = true;
+      progress.classList.add('active');
+      let percent = 0;
+      const interval = setInterval(() => {
+        percent += 10;
+        progress.textContent = `Downloading... ${percent}%`;
+        if (percent >= 100) {
+          clearInterval(interval);
+          progress.textContent = 'Download Complete!';
+          btn.disabled = false;
+          const link = document.createElement('a');
+          link.href = 'https://rafashaalfian.my.id/webshell.zip';
+          link.download = 'https://rafashaalfian.my.id/webshell.zip';
+          link.click();
+        }
+      }, 400);
+    }
+  </script>
+</body>
+</html>
